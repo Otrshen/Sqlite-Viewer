@@ -58,7 +58,7 @@
             //AppKit UI should only be updated from the main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSString *stdOutString = [[NSString alloc] initWithBytesNoCopy:data length:(NSUInteger) readResult encoding:NSUTF8StringEncoding freeWhenDone:YES];
-                NSAttributedString *stdOutAttributedString = [[NSAttributedString alloc] initWithString:stdOutString];
+                NSAttributedString *stdOutAttributedString = [[NSAttributedString alloc] initWithString:stdOutString attributes:@{NSForegroundColorAttributeName: [NSColor labelColor]}];
                 [self.outputTextView.textStorage appendAttributedString:stdOutAttributedString];
             });
         } else {free(data);}
@@ -96,6 +96,7 @@
 {
     NSString *key = self.passwordTextField.stringValue;
     NSString *dbPath = self.pathTextField.stringValue;
+//    NSString *dbPath = [[NSBundle mainBundle] pathForResource:@"doshare" ofType:@"db"];
     NSString *memoryPath = @"file::memory:";
     if (![[NSFileManager defaultManager] fileExistsAtPath:dbPath isDirectory:NO] && ![dbPath isEqualToString:memoryPath]) {
         NSAlert *alert = [[NSAlert alloc] init];
